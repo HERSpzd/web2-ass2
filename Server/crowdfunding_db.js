@@ -1,27 +1,30 @@
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'crowdfunding_db'
-});
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'root',
+//   database: 'crowdfunding_db'
+// });
 
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to database!');
-});
+// connection.connect((err) => {
+//   if (err) throw err;
+//   console.log('Connected to database!');
+// });
 
-connection.query('SELECT * FROM FUNDRAISER', (err,rows) => {
-  if(err) throw err;
-  
-  console.log(rows);
-  
-});
+var dbDetails = require("./db-details");
+var mysql = require('mysql2');
+var bodyParser = require('body-parser');
+var http = require('http');
 
-connection.query('SELECT * FROM CATEGORY', (err,rows) => {
-  if(err) throw err;
-  
-  console.log(rows);
-  
-});
+module.exports = {
+  getconnection: ()=>{
+  return mysql.createConnection({
+    host:dbDetails.host,
+    user:dbDetails.user,
+    password:dbDetails.password,
+    database:dbDetails.database 
+    });
+  }
+}
+
