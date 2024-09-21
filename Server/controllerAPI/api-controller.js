@@ -29,4 +29,23 @@ router.get("/fundraisers", (req, res)=>{
  })
 })
 
+router.get("/research", (req, res) => {
+  var query = `
+    SELECT f.*, c.NAME AS CATEGORY_NAME
+    FROM FUNDRAISER f
+    JOIN CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID
+    WHERE f.ACTIVE = true 
+    AND (f.ORGANIZER = ? OR f.CITY = ? OR c.NAME = ?);
+  `;
+
+  connection.query(query, [req.query.ORGANIZER, req.query.CITY, req.query.CATEGORY_NAME], 
+    (err, records, field) => {
+    if (err) {
+      console.error("Error while retrieve the data");
+    } else {
+      res.json(records);
+    }
+  });
+});
+
 module.exports = router;
