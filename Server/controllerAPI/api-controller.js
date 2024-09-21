@@ -48,4 +48,15 @@ router.get("/research", (req, res) => {
   });
 });
 
+router.get("/fundraisers/:id", (req, res)=>{
+  connection.query("select * from FUNDRAISER where FUNDRAISER_ID = " + req.params.id, 
+    (err, records, fields)=> {
+     if (err){
+       console.error("Error while retrieve the data");
+     }else{
+       res.send(records);
+     }
+  })
+})
+
 module.exports = router;
