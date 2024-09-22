@@ -1,16 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
+
 <body>
     <h1>Crowdfunding platform</h1>
-    <h3>Wlcome to leading crowdfunding platform</h3>
 
-    <a href="/"><span>Home</span></a> | <a href="/concert"><span>Concerts</span></a>  | <a href=""><span>Add a new concert</span></a>
-    
-    
+    <a href="/"><span>Home</span></a> | <a href="/searchfundraisers"><span>Search fundraisers</span></a> | <a
+        href="fundraisers"><span>Fundraisers</span></a>
+
+    <h2>Wlcome to leading crowdfunding platform!</h2>
+    <h5>Your support is the seed of hope!</h5>
+
+    <div>
+        <h3>About us</h3>
+        <p>We are a non-profit organization dedicated to helping individuals and groups in need. This is our
+            crowdfunding platform, through which you can easily contribute your efforts to worthy causes.
+            Our platform is committed to transparency, efficiency, and directness. Every fundraising project undergoes
+            strict review to ensure that your donations directly reach those who need them the most. You can easily
+            browse various fundraising projects and choose the ones to support based on your interests and values. From
+            medical assistance to educational support, from crisis relief to social innovation, there are various
+            projects here that require your assistance.</p>
+    </div>
+
+    <div>
+        <h3>Inspiring stories</h3>
+        <p>A team of young farmers with a dream to build an innovative farm-one that is to be based on renewable energy
+            and sustainable agriculture. Huge support was given to this idea on our platform. Today, this farm provides
+            not only organic food for the local community but also an educational center of sustainable agriculture,
+            with many visitors and learners from all over the country coming to visit.</p>
+    </div>
+
+    <div>
+        <h3>All of the active fundraisers</h3>
+        <div id="all-fundraisers"></div>
+    </div>
+
+    <div>
+        <h3>Contact info</h3>
+        <p>Email: crowdfunding@gmail.com</p>
+        <p>Telephone: 0772-1234567890</p>
+    </div>
+
 </body>
+
+<script>
+    fetch("http://localhost:3060/api/crowedfunding/fundraisers")
+        .then(response => response.json())
+        .then(data => {
+
+            const dataDiv = document.getElementById('all-fundraisers');
+            dataDiv.innerHTML = "";
+
+            if (data.length > 0) {
+                data.forEach(concert => {
+                    const newP = document.createElement("p");
+                    newP.textContent = `Concert: ${concert.ArtistName}, Location: ${concert.Location}`;
+
+                    dataDiv.appendChild(newP);
+                });
+
+            }
+            else {
+                dataDiv.textContent = "No fundraiser data";
+            }
+        })
+        .catch(error => {
+            console.error("Error fecthing data", error);
+            document.getElementById('data').textContent = "Failed to load data";
+        });
+
+</script>
+
 </html>

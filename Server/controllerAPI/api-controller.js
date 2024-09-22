@@ -4,15 +4,15 @@ connection.connect();
 var express = require('express');
 var router = express.Router();
 
-router.get("/", (req, res)=>{
-	connection.query("SELECT * from FUNDRAISER", (err, records, fields)=> {
-		 if (err){
-			 console.error("Error while retrieve the data");
-		 }else{
-			 res.send(records);
-		 }
-	})
-})
+// router.get("/", (req, res)=>{
+// 	connection.query("SELECT * from FUNDRAISER", (err, records, fields)=> {
+// 		 if (err){
+// 			 console.error("Error while retrieve the data");
+// 		 }else{
+// 			 res.send(records);
+// 		 }
+// 	})
+// })
 
 router.get("/fundraisers", (req, res)=>{
  connection.query(
@@ -27,6 +27,16 @@ router.get("/fundraisers", (req, res)=>{
       res.send(records);
     }
  })
+})
+
+router.get("/category", (req, res)=>{
+  connection.query("SELECT * from CATEGORY", (err, records, fields)=> {
+     if (err){
+       console.error("Error while retrieve the data");
+     }else{
+       res.send(records);
+     }
+  })
 })
 
 router.get("/research", (req, res) => {
