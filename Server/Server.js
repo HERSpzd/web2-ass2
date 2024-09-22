@@ -1,5 +1,9 @@
 var express = require('express');
+const cors = require("cors");
+
 var app = express();
+app.use(cors());
+
 var crowedfundingAPI = require("./controllerAPI/api-controller");
 
 

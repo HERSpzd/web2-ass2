@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Crowdfunding platform</h1>
+    <h1>Crowdfunding Platform</h1>
 
     <a href="/"><span>Home</span></a> | <a href="/searchfundraisers"><span>Search fundraisers</span></a> | <a
         href="fundraisers"><span>Fundraisers</span></a>
@@ -57,9 +57,9 @@
             dataDiv.innerHTML = "";
 
             if (data.length > 0) {
-                data.forEach(concert => {
+                data.forEach(crowedfunding => {
                     const newP = document.createElement("p");
-                    newP.textContent = `Concert: ${concert.ArtistName}, Location: ${concert.Location}`;
+                    newP.textContent = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, Caption: ${crowedfunding.CAPTION}, Target funding: ${crowedfunding.TARGET_FUNDING}, Current funding: ${crowedfunding.CURRENT_FUNDING}, City: ${crowedfunding.CITY}, Active: ${crowedfunding.ACTIVE}, Category: ${crowedfunding.CATEGORY_NAME},`;
 
                     dataDiv.appendChild(newP);
                 });
