@@ -19,7 +19,10 @@ app.get("/",(req,res)=>{
   res.sendFile(path.join(__dirname,"index.html"));
 });
 
-//we will add more routes here
+//route to serve search_fundraisers.html
+app.get("/search_fundraisers",(req,res)=>{
+    res.sendFile(path.join(__dirname,"search_fundraisers.html"));
+  });
 
 app.listen(8080,()=>{
   console.log("Running in 8080");

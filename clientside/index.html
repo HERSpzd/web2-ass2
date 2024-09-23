@@ -10,7 +10,7 @@
 <body>
     <h1>Crowdfunding Platform</h1>
 
-    <a href="/"><span>Home</span></a> | <a href="/searchfundraisers"><span>Search fundraisers</span></a> | <a
+    <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
         href="fundraisers"><span>Fundraisers</span></a>
 
     <h2>Wlcome to leading crowdfunding platform!</h2>
@@ -40,6 +40,8 @@
         <div id="all-fundraisers"></div>
     </div>
 
+    <div id="data"></div>
+
     <div>
         <h3>Contact info</h3>
         <p>Email: crowdfunding@gmail.com</p>
@@ -49,6 +51,7 @@
 </body>
 
 <script>
+    //缺少图片
     fetch("http://localhost:3060/api/crowedfunding/fundraisers")
         .then(response => response.json())
         .then(data => {

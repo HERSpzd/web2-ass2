@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Crowdfunding Platform</h1>
+
+    <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
+        href="fundraisers"><span>Fundraisers</span></a>
+
+    <div>
+        <h3>The criteria for searching</h3>
+        <p>Criteria 1:</p>
+        <form>
+            <select id="select1">
+                <option value="ORGANIZER">Organizer</option>
+                <option value="CITY">City</option>
+                <option value="CATEGORY">Category</option>
+            </select>
+            <input type="text" id="search-text">
+
+            <p>Criteria 2(opional):</p>
+            <select id="select2">
+                <option value="">NONE</option>
+                <option value="CITY">City</option>
+                <option value="CATEGORY">Category</option>
+            </select>
+            <input type="text" id="search-text">
+
+            <p>Criteria 3(opional):</p>
+            <select id="select3">
+                <option value="">NONE</option>
+                <option value="CATEGORY">Category</option>
+            </select>
+            <input type="text" id="search-text">
+
+            <br><br>
+            <input type="submit" value="Search" onclick="search()">
+        </form>
+
+
+
+    </div>
+
+    <div>
+        <h3>Search result</h3>
+        <div id="search-result"></div>
+    </div>
+
+
+    <input type="submit" value="Clear">
+
+
+    <div id="data"></div>
+
+</body>
+
+<script>
+    var searchText1 = document.getElementById("search-text1").value;
+    var select1 = document.getElementById("select1").value;
+
+    var searchText2 = document.getElementById("search-text2").value;
+    var select2 = document.getElementById("select2").value;
+
+    var searchText3 = document.getElementById("search-text3").value;
+    var select3 = document.getElementById("select3").value;
+
+    console.log(`http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`)
+    function search() {
+        if (search2 === NONE && search3 === NONE) {
+            var serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+        } else if (search3 === NONE) {
+            var serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+        } else {
+
+        }
+
+        fetch(serverURL)
+            .then(response => response.json())
+            .then(data => {
+
+                const dataDiv = document.getElementById('search-result');
+                dataDiv.innerHTML = "";
+
+                if (data.length > 0) {
+                    data.forEach(crowedfunding => {
+                        const newP = document.createElement("p");
+                        newP.textContent = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, More details`;
+
+                        dataDiv.appendChild(newP);
+                    });
+
+                }
+                else {
+                    dataDiv.textContent = "No fundraiser data";
+                }
+            })
+            .catch(error => {
+                console.error("Error fecthing data", error);
+                document.getElementById('data').textContent = "Failed to load data";
+            });
+
+    }
+</script>
+
+</html>
