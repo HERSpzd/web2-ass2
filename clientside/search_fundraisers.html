@@ -4,43 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Search fundraisers</title>
 </head>
 
 <body>
     <h1>Crowdfunding Platform</h1>
 
     <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
-        href="fundraisers"><span>Fundraisers</span></a>
+        href="/fundraisers"><span>Fundraisers</span></a>
 
     <div>
         <h3>The criteria for searching</h3>
         <p>Criteria 1:</p>
         <form>
             <select id="select1">
+                <option value="SELECT">SELECT...</option>
                 <option value="ORGANIZER">Organizer</option>
                 <option value="CITY">City</option>
                 <option value="CATEGORY">Category</option>
             </select>
-            <input type="text" id="search-text">
+            <input type="text" id="search-text1">
 
             <p>Criteria 2(opional):</p>
             <select id="select2">
-                <option value="">NONE</option>
+                <option value="NONE">NONE</option>
                 <option value="CITY">City</option>
                 <option value="CATEGORY">Category</option>
             </select>
-            <input type="text" id="search-text">
+            <input type="text" id="search-text2">
 
             <p>Criteria 3(opional):</p>
             <select id="select3">
-                <option value="">NONE</option>
+                <option value="NONE">NONE</option>
                 <option value="CATEGORY">Category</option>
             </select>
-            <input type="text" id="search-text">
+            <input type="text" id="search-text3">
 
             <br><br>
-            <input type="submit" value="Search" onclick="search()">
+            <input type="button" value="Search" onclick="search()">
         </form>
 
 
@@ -53,59 +54,83 @@
     </div>
 
 
-    <input type="submit" value="Clear">
+    <input type="submit" value="Clear" onclick="clearChechboxes()">
 
 
     <div id="data"></div>
+    <div id="error-message"></div>
 
 </body>
 
 <script>
-    var searchText1 = document.getElementById("search-text1").value;
-    var select1 = document.getElementById("select1").value;
 
-    var searchText2 = document.getElementById("search-text2").value;
-    var select2 = document.getElementById("select2").value;
+    function alertUsers() {
+        alert("Please choose one criteria!");
+    }
 
-    var searchText3 = document.getElementById("search-text3").value;
-    var select3 = document.getElementById("select3").value;
-
-    console.log(`http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`)
     function search() {
-        if (search2 === NONE && search3 === NONE) {
-            var serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
-        } else if (search3 === NONE) {
-            var serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+        var serverURL = "";
+        var searchText1 = document.getElementById("search-text1").value;
+        var select1 = document.getElementById("select1").value;
+
+        var searchText2 = document.getElementById("search-text2").value;
+        var select2 = document.getElementById("select2").value;
+
+        var searchText3 = document.getElementById("search-text3").value;
+        var select3 = document.getElementById("select3").value;
+        if (select2 === "NONE" && select3 === "NONE") {
+            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+        } else if (select3 === "NONE") {
+            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}`;
         } else {
-
+            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}&${select3}=${searchText3}`;
         }
-
+        console.log(serverURL);
         fetch(serverURL)
             .then(response => response.json())
             .then(data => {
 
                 const dataDiv = document.getElementById('search-result');
+                const errorMessage = document.getElementById('error-message');
                 dataDiv.innerHTML = "";
 
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
                         const newP = document.createElement("p");
-                        newP.textContent = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, More details`;
+                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, <a href="/fundraisers/${crowedfunding.FUNDRAISER_ID}">More details</a>`;
+
 
                         dataDiv.appendChild(newP);
                     });
 
-                }
-                else {
-                    dataDiv.textContent = "No fundraiser data";
+                } else if (document.getElementById("select1").value = "SELECT") {
+                    alertUsers();
+                } else {
+                    dataDiv.innerHTML = `<span style="color: red; "><strong>No fundraiser data<\strong><span>`;
                 }
             })
             .catch(error => {
                 console.error("Error fecthing data", error);
                 document.getElementById('data').textContent = "Failed to load data";
             });
+        
+
 
     }
+
+
+    function clearChechboxes() {
+        document.getElementById("select1").value = "SELECT";
+        document.getElementById("select2").value = "NONE";
+        document.getElementById("select3").value = "NONE";
+        document.getElementById("search-text1").value = "";
+        document.getElementById("search-text2").value = "";
+        document.getElementById("search-text3").value = "";
+        document.getElementById('search-result').innerHTML = "";
+    }
+
+
+
 </script>
 
 </html>
