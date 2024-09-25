@@ -19,7 +19,7 @@ router.get("/fundraisers", (req, res) => {
     `SELECT f.*, c.NAME AS CATEGORY_NAME
     FROM FUNDRAISER f
     JOIN CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID
-    WHERE f.ACTIVE = true; `,
+    WHERE f.ACTIVE = true`,
     (err, records, fields) => {
       if (err) {
         console.error("Error while retrieve the data");
@@ -106,7 +106,7 @@ router.get("/research", (req, res) => {
   }
 
   connection.query(query, parameters,
-    (err, records, field) => {
+    (err, records, fields) => {
       if (err) {
         console.error("Error while retrieve the data");
       } else {
@@ -116,8 +116,12 @@ router.get("/research", (req, res) => {
 });
 
 router.get("/fundraisers/:id", (req, res) => {
-  connection.query("select * from FUNDRAISER where FUNDRAISER_ID = " + req.params.id,
-    (err, records, fields) => {
+  connection.query(`SELECT f.*, c.NAME AS CATEGORY_NAME
+                    FROM FUNDRAISER f
+                    JOIN CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID 
+                    WHERE F.ACTIVE = true 
+                    AND FUNDRAISER_ID = ?` 
+    , [req.params.id], (err, records, fields) => {
       if (err) {
         console.error("Error while retrieve the data");
       } else {

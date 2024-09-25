@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Crowdfunding Platform</h1>
+    <h1>Crowedfunding Platform</h1>
 
     <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
         href="/fundraisers"><span>Fundraisers</span></a>
@@ -21,7 +21,7 @@
                 <option value="SELECT">SELECT...</option>
                 <option value="ORGANIZER">Organizer</option>
                 <option value="CITY">City</option>
-                <option value="CATEGORY">Category</option>
+                <option value="CATEGORY_NAME">Category</option>
             </select>
             <input type="text" id="search-text1">
 
@@ -29,14 +29,14 @@
             <select id="select2">
                 <option value="NONE">NONE</option>
                 <option value="CITY">City</option>
-                <option value="CATEGORY">Category</option>
+                <option value="CATEGORY_NAME">Category</option>
             </select>
             <input type="text" id="search-text2">
 
             <p>Criteria 3(opional):</p>
             <select id="select3">
                 <option value="NONE">NONE</option>
-                <option value="CATEGORY">Category</option>
+                <option value="CATEGORY_NAME">Category</option>
             </select>
             <input type="text" id="search-text3">
 
@@ -97,13 +97,13 @@
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
                         const newP = document.createElement("p");
-                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, <a href="/fundraisers/${crowedfunding.FUNDRAISER_ID}">More details</a>`;
+                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, <a href="/fundraisers?FUNDRAISER_ID=${crowedfunding.FUNDRAISER_ID}" onclick="saveId(${crowedfunding.FUNDRAISER_ID})">More details</a>`;
 
 
                         dataDiv.appendChild(newP);
                     });
 
-                } else if (document.getElementById("select1").value = "SELECT") {
+                } else if (document.getElementById("select1").value === "SELECT") {
                     alertUsers();
                 } else {
                     dataDiv.innerHTML = `<span style="color: red; "><strong>No fundraiser data<\strong><span>`;
@@ -113,7 +113,7 @@
                 console.error("Error fecthing data", error);
                 document.getElementById('data').textContent = "Failed to load data";
             });
-        
+
 
 
     }
@@ -129,7 +129,12 @@
         document.getElementById('search-result').innerHTML = "";
     }
 
-
+    function saveId(id) {
+        var saveId = id;
+        if (typeof (Storage) !== 'undefined') {
+            sessionStorage.setItem('id', saveId);
+        }
+    }
 
 </script>
 

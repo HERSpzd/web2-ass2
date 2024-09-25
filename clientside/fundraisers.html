@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundraisers</title>
+</head>
+
+<body>
+    <h1>Crowdfunding Platform</h1>
+
+    <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
+        href="/fundraisers"><span>Fundraisers</span></a>
+
+    <h3>Fundraisers details</h3>
+
+    <div id="fundraisers-details"></div>
+
+    <div id="data"></div>
+
+    <script>
+        var id = sessionStorage.getItem('id');
+        console.log(id);
+        console.log(`http://localhost:3060/api/crowedfunding/fundraisers/${id}`);
+        fetch(`http://localhost:3060/api/crowedfunding/fundraisers/${id}`)
+            .then(response => response.json())
+            .then(data => {
+
+                const dataDiv = document.getElementById('fundraisers-details');
+                dataDiv.innerHTML = "";
+
+                if (data.length > 0) {
+                    data.forEach(crowedfunding => {
+                        const newP = document.createElement("p");
+                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, Caption: ${crowedfunding.CAPTION}, Target funding: ${crowedfunding.TARGET_FUNDING}, Current funding: ${crowedfunding.CURRENT_FUNDING}, City: ${crowedfunding.CITY}, Active: ${crowedfunding.ACTIVE}, Category: ${crowedfunding.CATEGORY_NAME}, <button onclick="donateAlert()">Donate</button>`;
+
+                        dataDiv.appendChild(newP);
+                    });
+
+                }
+                else {
+                    dataDiv.textContent = "No fundraiser data";
+                }
+            })
+            .catch(error => {
+                console.error("Error fecthing data", error);
+                document.getElementById('data').textContent = "Failed to load data";
+            });
+
+            function donateAlert() {
+                alert("This feature is under contruction");
+            }
+
+
+
+            // localStorage.removeItem('id');
+
+
+
+    </script>
+
+</body>
+
+</html>
