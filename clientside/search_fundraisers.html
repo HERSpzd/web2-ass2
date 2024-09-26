@@ -5,69 +5,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search fundraisers</title>
+
+    <style>
+        body {
+            background-color: #eef3f8;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #nav {
+            text-align: center;
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            background-color: rgb(50, 142, 203);
+            width: 80%;
+        }
+
+        #nav li {
+            display: inline-block;
+        }
+
+        #nav li a {
+            display: block;
+            padding: 10px 20px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        #nav li a:hover {
+            background-color: #0069d9;
+        }
+
+        #box1 {
+            width: 80%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        footer {
+            text-align: center;
+            clear: both;
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Crowedfunding Platform</h1>
 
-    <div id="nav">
-        <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
-            href="/fundraisers"><span>Fundraisers</span></a>
+    <ul id="nav">
+        <li><a href="/"><span>Home</span></a></li>
+        <li><a href="/search_fundraisers"><span>Search fundraisers</span></a></li>
+        <li><a href="fundraisers"><span>Fundraisers</span></a></li>
+    </ul>
+
+    <div id="box1">
+        <div>
+            <h3>The criteria for searching</h3>
+            <p>Criteria 1:</p>
+            <form>
+                <select id="select1">
+                    <option value="SELECT">SELECT...</option>
+                    <option value="ORGANIZER">Organizer</option>
+                    <option value="CITY">City</option>
+                    <option value="CATEGORY_NAME">Category</option>
+                </select>
+                <input type="text" id="search-text1">
+
+                <p>Criteria 2(opional):</p>
+                <select id="select2">
+                    <option value="NONE">NONE</option>
+                    <option value="CITY">City</option>
+                    <option value="CATEGORY_NAME">Category</option>
+                </select>
+                <input type="text" id="search-text2">
+
+                <p>Criteria 3(opional):</p>
+                <select id="select3">
+                    <option value="NONE">NONE</option>
+                    <option value="CATEGORY_NAME">Category</option>
+                </select>
+                <input type="text" id="search-text3">
+
+                <br><br>
+                <input type="button" value="Search" onclick="search()">
+                <input type="submit" value="Clear" onclick="clearChechboxes()">
+            </form>
+        </div>
+
+
+        <div>
+            <h3>Search result</h3>
+            <div id="search-result"></div>
+        </div>
+
+
+
+
+
+        <div id="data"></div>
+        <div id="error-message"></div>
     </div>
-    
-    <div>
-        <h3>The criteria for searching</h3>
-        <p>Criteria 1:</p>
-        <form>
-            <select id="select1">
-                <option value="SELECT">SELECT...</option>
-                <option value="ORGANIZER">Organizer</option>
-                <option value="CITY">City</option>
-                <option value="CATEGORY_NAME">Category</option>
-            </select>
-            <input type="text" id="search-text1">
 
-            <p>Criteria 2(opional):</p>
-            <select id="select2">
-                <option value="NONE">NONE</option>
-                <option value="CITY">City</option>
-                <option value="CATEGORY_NAME">Category</option>
-            </select>
-            <input type="text" id="search-text2">
-
-            <p>Criteria 3(opional):</p>
-            <select id="select3">
-                <option value="NONE">NONE</option>
-                <option value="CATEGORY_NAME">Category</option>
-            </select>
-            <input type="text" id="search-text3">
-
-            <br><br>
-            <input type="button" value="Search" onclick="search()">
-        </form>
-
-
-
-    </div>
-
-    <div>
-        <h3>Search result</h3>
-        <div id="search-result"></div>
-    </div>
-
-
-    <input type="submit" value="Clear" onclick="clearChechboxes()">
-
-
-    <div id="data"></div>
-    <div id="error-message"></div>
-
-
-    <div id="contact-info">
-        <h3>Contact info</h3>
-        <p>Email: crowdfunding@gmail.com</p>
-        <p>Telephone: 0772-1234567890</p>
-    </div>
+    <footer>
+        <div id="contact-info">
+            <h3>Contact infomation</h3>
+            <p>Email: crowdfunding@gmail.com</p>
+            <p>Telephone: 0772-1234567890</p>
+        </div>
+    </footer>
 
 </body>
 
