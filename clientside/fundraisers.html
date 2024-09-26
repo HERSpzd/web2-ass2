@@ -10,14 +10,24 @@
 <body>
     <h1>Crowdfunding Platform</h1>
 
-    <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
-        href="/fundraisers"><span>Fundraisers</span></a>
-
+    <div id="nav">
+        <a href="/"><span>Home</span></a> | <a href="/search_fundraisers"><span>Search fundraisers</span></a> | <a
+            href="/fundraisers"><span>Fundraisers</span></a>
+    </div>
+    
     <h3>Fundraisers details</h3>
 
     <div id="fundraisers-details"></div>
 
     <div id="data"></div>
+
+
+
+    <div id="contact-info">
+        <h3>Contact info</h3>
+        <p>Email: crowdfunding@gmail.com</p>
+        <p>Telephone: 0772-1234567890</p>
+    </div>
 
     <script>
         var id = sessionStorage.getItem('id');
@@ -48,13 +58,13 @@
                 document.getElementById('data').textContent = "Failed to load data";
             });
 
-            function donateAlert() {
-                alert("This feature is under contruction");
-            }
+        function donateAlert() {
+            alert("This feature is under contruction");
+        }
 
 
 
-            // localStorage.removeItem('id');
+        // localStorage.removeItem('id');
 
 
 
