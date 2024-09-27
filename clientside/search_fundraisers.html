@@ -44,6 +44,28 @@
             width: 80%;
             margin: 0 auto;
             padding: 0;
+            margin-top: 15px;
+        }
+
+        #box {
+            width: 30%;
+            float: right;
+        }
+
+        #operation-guide {
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            padding-top: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        #criteria {
+            width: 70%;
+            float: left;
         }
 
         footer {
@@ -65,50 +87,75 @@
 
     <div id="box1">
         <div>
-            <h3>The criteria for searching</h3>
-            <p>Criteria 1:</p>
-            <form>
-                <select id="select1">
-                    <option value="SELECT">SELECT...</option>
-                    <option value="ORGANIZER">Organizer</option>
-                    <option value="CITY">City</option>
-                    <option value="CATEGORY_NAME">Category</option>
-                </select>
-                <input type="text" id="search-text1">
 
-                <p>Criteria 2(opional):</p>
-                <select id="select2">
-                    <option value="NONE">NONE</option>
-                    <option value="CITY">City</option>
-                    <option value="CATEGORY_NAME">Category</option>
-                </select>
-                <input type="text" id="search-text2">
 
-                <p>Criteria 3(opional):</p>
-                <select id="select3">
-                    <option value="NONE">NONE</option>
-                    <option value="CATEGORY_NAME">Category</option>
-                </select>
-                <input type="text" id="search-text3">
+            <div id="criteria">
+                <h3>The criteria for searching</h3>
+                <p>Criteria 1:</p>
+                <form>
+                    <select id="select1">
+                        <option value="SELECT">SELECT...</option>
+                        <option value="ORGANIZER">Organizer</option>
+                        <option value="CITY">City</option>
+                        <option value="CATEGORY_NAME">Category</option>
+                    </select>
+                    <input type="text" id="search-text1">
 
-                <br><br>
-                <input type="button" value="Search" onclick="search()">
-                <input type="submit" value="Clear" onclick="clearChechboxes()">
-            </form>
+                    <p>Criteria 2(opional):</p>
+                    <select id="select2">
+                        <option value="NONE">NONE</option>
+                        <option value="CITY">City</option>
+                        <option value="CATEGORY_NAME">Category</option>
+                    </select>
+                    <input type="text" id="search-text2">
+
+                    <p>Criteria 3(opional):</p>
+                    <select id="select3">
+                        <option value="NONE">NONE</option>
+                        <option value="CATEGORY_NAME">Category</option>
+                    </select>
+                    <input type="text" id="search-text3">
+
+                    <br><br>
+                    <input type="button" value="Search" onclick="search()">
+                    <input type="button" value="Clear" onclick="clearChechboxes()">
+                </form>
+
+
+
+                <div>
+                    <h3>Search result</h3>
+                    <div id="search-result"></div>
+                </div>
+
+                <div id="data"></div>
+                <div id="error-message"></div>
+            </div>
+        </div>
+
+        <div id="box">
+            <div id="operation-guide">
+                <h3>The operation guide of this page</h3>
+                <p>Select at least one and at most three search categories on the left side of this page. When selecting
+                    a
+                    category, only choose one of the three categories at "Criteria 1". When selecting two categories,
+                    choose
+                    between "Criteria 1" and "Criteria 2". When selecting three categories, choose from "Criteria 1",
+                    "Criteria 2", and "Criteria 3". Then enter text in the corresponding search box and press "Search"
+                    to
+                    search. The search results will be displayed in the "Search result" section. To find more
+                    information
+                    about the corresponding Fundraiser, click on the "More detail" hyperlink, and the webpage will
+                    automatically redirect and display more relevant information.</p>
+            </div>
+            <br>
         </div>
 
 
-        <div>
-            <h3>Search result</h3>
-            <div id="search-result"></div>
-        </div>
+    </div>
 
 
 
-
-
-        <div id="data"></div>
-        <div id="error-message"></div>
     </div>
 
     <footer>
