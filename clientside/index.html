@@ -72,32 +72,42 @@
             float: left;
         }
 
+        #subtitle, #line {
+            width: 100%;
+            border-bottom: 1.5px solid #0056b3;
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 0.5px;
+        }
+
         footer {
             text-align: center;
             clear: both;
             padding: 20px;
         }
-
     </style>
 </head>
 
 <body>
-    <h1>Crowedfunding Platform</h1>
+    <!-- Main title -->
+    <h1>Crowdfunding Platform</h1>
 
+    <!-- Navigation -->
     <ul id="nav">
         <li><a href="/"><span>Home</span></a></li>
-        <li><a href="/search_fundraisers"><span>Search fundraisers</span></a></li>
+        <li><a href="/search_fundraisers"><span>Search Fundraisers</span></a></li>
         <li><a href="fundraisers"><span>Fundraisers</span></a></li>
     </ul>
 
-
+    <!-- Welcome message -->
     <div id="title">
         <h2>Wlcome to leading crowdfunding platform!</h2>
-        <h5>Your support is the seed of hope!</h5>
+
     </div>
     <div id="box1">
+        <!-- Active fundraisers -->
         <div id="active-fundraisers">
-            <h3>All of the active fundraisers</h3>
+            <h3 id="subtitle">All of the active fundraisers</h3>
             <div id="all-fundraisers"></div>
 
 
@@ -106,7 +116,8 @@
 
         <div id="box">
             <div id="about-us">
-                <h3>About us</h3>
+                <!-- About us section -->
+                <h3 id="subtitle">About us</h3>
                 <p>We are a non-profit organization dedicated to helping individuals and groups in need. This is our
                     crowdfunding platform, through which you can easily contribute your efforts to worthy causes.
                     Our platform is committed to transparency, efficiency, and directness. Every fundraising project
@@ -122,8 +133,10 @@
             </div>
             <br>
 
+            <!-- Two Inspiring stories here -->
             <div id="inspiring-stories">
-                <h3>Inspiring stories</h3>
+                <h3 id="subtitle">Inspiring stories</h3>
+                <h4>Story 1</h4>
                 <p>A team of young farmers with a dream to build an innovative farm-one that is to be based on renewable
                     energy
                     and sustainable agriculture. Huge support was given to this idea on our platform. Today, this farm
@@ -131,16 +144,25 @@
                     not only organic food for the local community but also an educational center of sustainable
                     agriculture,
                     with many visitors and learners from all over the country coming to visit.</p>
+                <h4>Story 2</h4>
+                <p>A young team of marine biologists, passionate in the study of the ocean, have long been on the dream
+                    of setting up a marine protected area and a research center. The aim is not just protection but also
+                    the education of the masses on the essence of ocean conservation. This ambitious project has
+                    gathered serious interest on our crowdfunding platform.</p>
             </div>
         </div>
 
     </div>
 
+    <!-- Footer section -->
     <footer>
+        <!-- contact info -->
         <div id="contact-info">
             <h3>Contact infomation</h3>
             <p>Email: crowdfunding@gmail.com</p>
             <p>Telephone: 0772-1234567890</p>
+            <!-- Purpose of Public Welfare Organization -->
+            <h5>Your support is the seed of hope!</h5>
         </div>
     </footer>
 
@@ -157,17 +179,22 @@
 
             if (data.length > 0) {
                 data.forEach(crowedfunding => {
+                    const newDiv = document.createElement("div");
                     const newP = document.createElement("p");
-                    newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID} <br> 
-                    Organiser: ${crowedfunding.ORGANIZER} <br> 
+                    newP.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
+                    ID: ${crowedfunding.FUNDRAISER_ID} <br> 
                     Caption: ${crowedfunding.CAPTION} <br> 
                     Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
                     Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
                     City: ${crowedfunding.CITY} <br> 
                     Active: ${crowedfunding.ACTIVE} <br> 
-                    Category: ${crowedfunding.CATEGORY_NAME}`;
+                    Category: ${crowedfunding.CATEGORY_NAME} <br>
+                    <div id="line"></div>`;
 
                     dataDiv.appendChild(newP);
+
+
+
 
 
                 });

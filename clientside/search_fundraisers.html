@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search fundraisers</title>
+    <title>Search Fundraisers</title>
 
     <style>
         body {
@@ -68,6 +68,14 @@
             float: left;
         }
 
+        #subtitle {
+            width: 100%;
+            border-bottom: 1.5px solid #0056b3;
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 0.5px;
+        }
+
         footer {
             text-align: center;
             clear: both;
@@ -77,20 +85,22 @@
 </head>
 
 <body>
-    <h1>Crowedfunding Platform</h1>
+    <!-- Main title -->
+    <h1>Crowdfunding Platform</h1>
 
+    <!-- Navigation -->
     <ul id="nav">
         <li><a href="/"><span>Home</span></a></li>
-        <li><a href="/search_fundraisers"><span>Search fundraisers</span></a></li>
+        <li><a href="/search_fundraisers"><span>Search Fundraisers</span></a></li>
         <li><a href="fundraisers"><span>Fundraisers</span></a></li>
     </ul>
 
     <div id="box1">
         <div>
 
-
+            <!-- A simple form to display criteria for searching (organizer, city & category) -->
             <div id="criteria">
-                <h3>The criteria for searching</h3>
+                <h3 id="subtitle">The criteria for searching</h3>
                 <p>Criteria 1:</p>
                 <form>
                     <select id="select1">
@@ -101,7 +111,7 @@
                     </select>
                     <input type="text" id="search-text1">
 
-                    <p>Criteria 2(opional):</p>
+                    <p>Criteria 2 (opional):</p>
                     <select id="select2">
                         <option value="NONE">NONE</option>
                         <option value="CITY">City</option>
@@ -109,7 +119,7 @@
                     </select>
                     <input type="text" id="search-text2">
 
-                    <p>Criteria 3(opional):</p>
+                    <p>Criteria 3 (opional):</p>
                     <select id="select3">
                         <option value="NONE">NONE</option>
                         <option value="CATEGORY_NAME">Category</option>
@@ -122,20 +132,22 @@
                 </form>
 
 
-
+                <!-- Display search results -->
                 <div>
                     <h3>Search result</h3>
                     <div id="search-result"></div>
                 </div>
 
                 <div id="data"></div>
+                <!-- Display error message -->
                 <div id="error-message"></div>
             </div>
         </div>
 
         <div id="box">
+            <!-- Operation guide of this page -->
             <div id="operation-guide">
-                <h3>The operation guide of this page</h3>
+                <h3 id="subtitle">The guide of this page</h3>
                 <p>Select at least one and at most three search categories on the left side of this page. When selecting
                     a
                     category, only choose one of the three categories at "Criteria 1". When selecting two categories,
@@ -147,8 +159,9 @@
                     information
                     about the corresponding Fundraiser, click on the "More detail" hyperlink, and the webpage will
                     automatically redirect and display more relevant information.</p>
-            </div>
+            
             <br>
+        </div>
         </div>
 
 
@@ -158,11 +171,15 @@
 
     </div>
 
+    <!-- Footer section -->
     <footer>
+        <!-- contact info -->
         <div id="contact-info">
             <h3>Contact infomation</h3>
             <p>Email: crowdfunding@gmail.com</p>
             <p>Telephone: 0772-1234567890</p>
+            <!-- Purpose of Public Welfare Organization -->
+            <h5>Your support is the seed of hope!</h5>
         </div>
     </footer>
 
@@ -203,7 +220,7 @@
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
                         const newP = document.createElement("p");
-                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organiser: ${crowedfunding.ORGANIZER}, <a href="/fundraisers?FUNDRAISER_ID=${crowedfunding.FUNDRAISER_ID}" onclick="saveId(${crowedfunding.FUNDRAISER_ID})">More details</a>`;
+                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organizer: ${crowedfunding.ORGANIZER}, <a href="/fundraisers?FUNDRAISER_ID=${crowedfunding.FUNDRAISER_ID}" onclick="saveId(${crowedfunding.FUNDRAISER_ID})">More details</a>`;
 
 
                         dataDiv.appendChild(newP);

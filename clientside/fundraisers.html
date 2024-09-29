@@ -43,6 +43,36 @@
             width: 80%;
             margin: 0 auto;
             padding: 0;
+            margin-top: 15px;
+        }
+
+        #fundraisers-details1 {
+            width: 70%;
+            float: left;
+        }
+
+        #box {
+            width: 30%;
+            float: right;
+        }
+
+        #operation-guide {
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            padding-top: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        #subtitle {
+            width: 100%;
+            border-bottom: 1.5px solid #0056b3;
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 0.5px;
         }
 
         footer {
@@ -54,29 +84,54 @@
 </head>
 
 <body>
-    <h1>Crowedfunding Platform</h1>
+    <!-- Main title -->
+    <h1>Crowdfunding Platform</h1>
 
+    <!-- Navigation -->
     <ul id="nav">
         <li><a href="/"><span>Home</span></a></li>
-        <li><a href="/search_fundraisers"><span>Search fundraisers</span></a></li>
+        <li><a href="/search_fundraisers"><span>Search Fundraisers</span></a></li>
         <li><a href="fundraisers"><span>Fundraisers</span></a></li>
     </ul>
 
+
     <div id="box1">
-        <h3>Fundraisers details</h3>
+        <!-- Fundraisers details -->
+        <div id="fundraisers-details1">
+            <h3 id="subtitle">Fundraisers details</h3>
 
-        <div id="fundraisers-details"></div>
+            <div id="fundraisers-details"></div>
 
-        <div id="data"></div>
+            <div id="data"></div>
+        </div>
+
+        <!-- Operation guide of this page -->
+        <div id="box">
+            <div id="operation-guide">
+                <h3 id="subtitle">The guide of this page</h3>
+                <p>This page displays more information about fundraisers. Then you can click on "Donate" to make a
+                    donation. The donation function is temporarily unavailable. Thank you for your understanding!</p>
+
+                <br>
+
+            </div>
+        </div>
+
+
     </div>
 
+    <!-- Footer section -->
     <footer>
+        <!-- contact info -->
         <div id="contact-info">
             <h3>Contact infomation</h3>
             <p>Email: crowdfunding@gmail.com</p>
             <p>Telephone: 0772-1234567890</p>
+            <!-- Purpose of Public Welfare Organization -->
+            <h5>Your support is the seed of hope!</h5>
         </div>
     </footer>
+    
     <script>
         var id = sessionStorage.getItem('id');
         console.log(id);
@@ -91,15 +146,15 @@
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
                         const newP = document.createElement("p");
-                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID} <br> 
-                        Organiser: ${crowedfunding.ORGANIZER} <br> 
-                        Caption: ${crowedfunding.CAPTION} <br> 
-                        Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
-                        Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
-                        City: ${crowedfunding.CITY} <br> 
-                        Active: ${crowedfunding.ACTIVE} <br> 
-                        Category: ${crowedfunding.CATEGORY_NAME} <br><br>
-                        <button onclick="donateAlert()">Donate</button>`;
+                        newP.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
+                            ID: ${crowedfunding.FUNDRAISER_ID} <br> 
+                            Caption: ${crowedfunding.CAPTION} <br> 
+                            Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
+                            Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
+                            City: ${crowedfunding.CITY} <br> 
+                            Active: ${crowedfunding.ACTIVE} <br> 
+                            Category: ${crowedfunding.CATEGORY_NAME} <br><br>
+                            <button onclick="donateAlert()">Donate</button>`;
 
                         dataDiv.appendChild(newP);
                     });
@@ -116,11 +171,12 @@
 
         function donateAlert() {
             alert("This feature is under contruction");
+
         }
 
 
+        //localStorage.removeItem('id');
 
-        // localStorage.removeItem('id');
 
 
 

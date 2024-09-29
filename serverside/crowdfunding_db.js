@@ -1,22 +1,16 @@
-// const mysql = require('mysql2');
-
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'root',
-//   database: 'crowdfunding_db'
-// });
-
-// connection.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected to database!');
-// });
-
+// Import db-details
 var dbDetails = require("./db-details");
+
+// Import required modules
 var mysql = require('mysql2');
 var bodyParser = require('body-parser');
 var http = require('http');
 
+/**
+ * 
+ * Create connection to database
+ * 
+ */
 module.exports = {
   getconnection: ()=>{
   return mysql.createConnection({
