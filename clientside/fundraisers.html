@@ -58,12 +58,11 @@
 
         #operation-guide {
             background-color: white;
-            border-radius: 5px;
             padding-left: 20px;
             padding-right: 20px;
             padding-bottom: 20px;
             padding-top: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
         }
 
@@ -75,10 +74,42 @@
             margin-bottom: 0.5px;
         }
 
+        #fundraisers-details1 {
+            margin-bottom: 20%;
+        }
+
+        /* Set the style of details of fundraisers  */
+        #content {
+            float: right;
+            margin-top: 4%;
+            margin-left: 0;
+            width: 40%;
+
+        }
+
+        /* Set image style */
+        #fundraisers-details img {
+            float: left;
+            width: 40%;
+            height: auto;
+            margin-left: 10%;
+            margin-top: 3%;
+        }
+
+        #donate {
+            width: 20%;
+            height: 30px;
+
+        }
+
+
+        /* Set the style of the footer */
         footer {
             text-align: center;
             clear: both;
-            padding: 20px;
+            padding: 3px;
+            background-color: rgb(50, 142, 203);
+            color: white;
         }
     </style>
 </head>
@@ -131,7 +162,7 @@
             <h5>Your support is the seed of hope!</h5>
         </div>
     </footer>
-    
+
     <script>
         var id = sessionStorage.getItem('id');
         console.log(id);
@@ -140,23 +171,34 @@
             .then(response => response.json())
             .then(data => {
 
+
                 const dataDiv = document.getElementById('fundraisers-details');
                 dataDiv.innerHTML = "";
 
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
-                        const newP = document.createElement("p");
-                        newP.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
-                            ID: ${crowedfunding.FUNDRAISER_ID} <br> 
-                            Caption: ${crowedfunding.CAPTION} <br> 
-                            Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
-                            Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
-                            City: ${crowedfunding.CITY} <br> 
-                            Active: ${crowedfunding.ACTIVE} <br> 
-                            Category: ${crowedfunding.CATEGORY_NAME} <br><br>
-                            <button onclick="donateAlert()">Donate</button>`;
+                        // Create img element to display images on the page
+                        const newImg = document.createElement("img");
+                        newImg.src = `image/image${crowedfunding.FUNDRAISER_ID}.png`;
 
-                        dataDiv.appendChild(newP);
+                        // Create a div element to display the searched fundraisers
+                        const newDiv1 = document.createElement("div");
+                        // Name its ID as 'content'
+                        newDiv1.id = "content";
+                        // Display some details of searched fundraisers
+                        newDiv1.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
+                                            ID: ${crowedfunding.FUNDRAISER_ID} <br> 
+                                            Caption: ${crowedfunding.CAPTION} <br> 
+                                            Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
+                                            Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
+                                            City: ${crowedfunding.CITY} <br> 
+                                            Active: ${crowedfunding.ACTIVE} <br> 
+                                            Category: ${crowedfunding.CATEGORY_NAME} <br><br>
+                                            <button id="donate" onclick="donateAlert(); removeSessionStorage()">Donate</button>`;
+
+                        dataDiv.appendChild(newImg);
+                        dataDiv.appendChild(newDiv1);
+
                     });
 
                 }
@@ -174,8 +216,10 @@
 
         }
 
+        function removeSessionStorage() {
+            sessionStorage.removeItem('id');
+        }
 
-        //localStorage.removeItem('id');
 
 
 

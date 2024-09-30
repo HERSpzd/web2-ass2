@@ -6,20 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <style>
+        /* Set the style of the entire page */
         body {
             background-color: #eef3f8;
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
+        /* Set the style of h1 */
         h1 {
             text-align: center;
         }
 
+        /* Set the style of welcome message */
         #title {
             text-align: center;
 
         }
 
+        /* Set the style of the navigation bar */
         #nav {
             text-align: center;
             list-style: none;
@@ -36,54 +40,86 @@
         #nav li a {
             display: block;
             padding: 10px 20px;
-            color: #ffffff;
+            color: white;
+            /* Clear underline */
             text-decoration: none;
+
         }
 
+        /* Mouse over to change color */
         #nav li a:hover {
             background-color: #0069d9;
         }
 
+        /* Set a background box for 'about us' and 'inspiring stories' */
         #about-us,
         #inspiring-stories {
             background-color: white;
-            border-radius: 5px;
             padding-left: 20px;
             padding-right: 20px;
             padding-bottom: 20px;
             padding-top: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Set Shadow */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
         }
 
+        /* Set box1 container style */
         #box1 {
             width: 80%;
             margin: 0 auto;
             padding: 0;
         }
 
+        /* Set box container style */
         #box {
             width: 30%;
+            /* Right floating */
             float: right;
         }
 
+        /* 'active-fundraisers' Container Style */
         #active-fundraisers {
             width: 70%;
+            /* Left floating */
             float: left;
         }
 
-        #subtitle, #line {
+        /* Set the dividing line for each subheading */
+        #subtitle,
+        #line {
             width: 100%;
             border-bottom: 1.5px solid #0056b3;
-            padding-bottom: 10px;
+            padding-bottom: 2%;
             display: inline-block;
-            margin-bottom: 0.5px;
+            margin-bottom: 1%;
         }
 
+        /* Set the style of details of fundraisers  */
+        #content {
+            float: right;
+            margin-top: 2%;
+            margin-left: 0;
+            width: 50%;
+
+        }
+
+        /* Set image style */
+        #all-fundraisers img {
+            float: left;
+            width: 30%;
+            height: auto;
+            margin-left: 15%;
+            margin-top: 3%;
+        }
+
+        /* Set the style of the footer */
         footer {
             text-align: center;
             clear: both;
-            padding: 20px;
+            padding: 3px;
+            background-color: rgb(50, 142, 203);
+            color: white;
         }
     </style>
 </head>
@@ -169,29 +205,49 @@
 </body>
 
 <script>
-    //缺少图片
-    fetch("http://localhost:3060/api/crowedfunding/fundraisers")
+    /**
+     * 
+     * Retrieve data from the server and display 
+     * all active fundraisers on the page
+     * 
+     * 
+     */
+    fetch("http://localhost:3060/api/crowedfunding/fundraisers")  //Send request URL and respond
         .then(response => response.json())
         .then(data => {
 
+            // Get the div with ID 'all-fundraisers'
             const dataDiv = document.getElementById('all-fundraisers');
             dataDiv.innerHTML = "";
 
             if (data.length > 0) {
                 data.forEach(crowedfunding => {
-                    const newDiv = document.createElement("div");
-                    const newP = document.createElement("p");
-                    newP.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
+                    // Create img element to display images on the page
+                    const newImg = document.createElement("img");
+                    newImg.src = `image/image${crowedfunding.FUNDRAISER_ID}.png`;
+
+                    // Create a div element to display all active fundraisers
+                    const newDiv1 = document.createElement("div");
+                    // Name its ID as 'content'
+                    newDiv1.id = "content";
+                    // Display some details of active fundraisers
+                    newDiv1.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
                     ID: ${crowedfunding.FUNDRAISER_ID} <br> 
                     Caption: ${crowedfunding.CAPTION} <br> 
                     Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
                     Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
                     City: ${crowedfunding.CITY} <br> 
                     Active: ${crowedfunding.ACTIVE} <br> 
-                    Category: ${crowedfunding.CATEGORY_NAME} <br>
-                    <div id="line"></div>`;
+                    Category: ${crowedfunding.CATEGORY_NAME} <br>`;
 
-                    dataDiv.appendChild(newP);
+                    // Display a blue line under the fundraisers
+                    const newDiv = document.createElement("div");
+                    newDiv.id = "line";
+
+                    // Add three elements to the page
+                    dataDiv.appendChild(newImg);
+                    dataDiv.appendChild(newDiv1);
+                    dataDiv.appendChild(newDiv);
 
 
 
@@ -200,6 +256,7 @@
                 });
 
             }
+            // If no corresponding data is found, an error message will be displayed
             else {
                 dataDiv.textContent = "No fundraiser data";
             }

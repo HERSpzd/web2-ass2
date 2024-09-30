@@ -54,12 +54,11 @@
 
         #operation-guide {
             background-color: white;
-            border-radius: 5px;
             padding-left: 20px;
             padding-right: 20px;
             padding-bottom: 20px;
             padding-top: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
         }
 
@@ -68,7 +67,8 @@
             float: left;
         }
 
-        #subtitle {
+        #subtitle,
+        #search-result1 {
             width: 100%;
             border-bottom: 1.5px solid #0056b3;
             padding-bottom: 10px;
@@ -76,10 +76,36 @@
             margin-bottom: 0.5px;
         }
 
+        form {
+            margin-left: auto;
+            margin-right: auto;
+            width: 45%;
+        }
+
+        select {
+            width: 30%;
+            height: 30px;
+            background-color: #eef3f8;
+        }
+
+        #search1, #clear {
+            width: 20%;
+            height: 30px;
+        }
+
+        #search-text1, #search-text2, #search-text3 {
+            width: 60%;
+            height: 30px;
+        }
+
+
+        /* Set the style of the footer */
         footer {
             text-align: center;
             clear: both;
-            padding: 20px;
+            padding: 3px;
+            background-color: rgb(50, 142, 203);
+            color: white;
         }
     </style>
 </head>
@@ -101,15 +127,16 @@
             <!-- A simple form to display criteria for searching (organizer, city & category) -->
             <div id="criteria">
                 <h3 id="subtitle">The criteria for searching</h3>
-                <p>Criteria 1:</p>
+
                 <form>
+                    <p>Criteria 1:</p>
                     <select id="select1">
                         <option value="SELECT">SELECT...</option>
                         <option value="ORGANIZER">Organizer</option>
                         <option value="CITY">City</option>
                         <option value="CATEGORY_NAME">Category</option>
                     </select>
-                    <input type="text" id="search-text1">
+                    <input type="text" id="search-text1" placeholder="Please input some text">
 
                     <p>Criteria 2 (opional):</p>
                     <select id="select2">
@@ -117,24 +144,24 @@
                         <option value="CITY">City</option>
                         <option value="CATEGORY_NAME">Category</option>
                     </select>
-                    <input type="text" id="search-text2">
+                    <input type="text" id="search-text2" placeholder="Please input some text">
 
                     <p>Criteria 3 (opional):</p>
                     <select id="select3">
                         <option value="NONE">NONE</option>
                         <option value="CATEGORY_NAME">Category</option>
                     </select>
-                    <input type="text" id="search-text3">
+                    <input type="text" id="search-text3" placeholder="Please input some text">
 
                     <br><br>
-                    <input type="button" value="Search" onclick="search()">
-                    <input type="button" value="Clear" onclick="clearChechboxes()">
+                    <input type="button" value="Search" id="search1" onclick="search()">&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="button" value="Clear" id="clear" onclick="clearChechboxes()">
                 </form>
 
 
                 <!-- Display search results -->
                 <div>
-                    <h3>Search result</h3>
+                    <h3 id="search-result1">Search result</h3>
                     <div id="search-result"></div>
                 </div>
 
@@ -159,9 +186,9 @@
                     information
                     about the corresponding Fundraiser, click on the "More detail" hyperlink, and the webpage will
                     automatically redirect and display more relevant information.</p>
-            
-            <br>
-        </div>
+
+                <br>
+            </div>
         </div>
 
 
@@ -186,29 +213,60 @@
 </body>
 
 <script>
-
+    /**
+     * 
+     * alertUsers function
+     * 
+     * Display warning pop-up window:
+     * Users must select at least one search critera
+     * 
+     */
     function alertUsers() {
         alert("Please choose one criteria!");
     }
 
+    /**
+     * 
+     * search function
+     * 
+     * Build a URL based on the search criteria selected 
+     * by the user, send the request to the server side, 
+     * and process the response
+     * 
+     */
     function search() {
+        // Define a String type with an empty serverURL
         var serverURL = "";
+        // Get the first value input by the user
         var searchText1 = document.getElementById("search-text1").value;
+        // Get the first search cateria selected by the user
         var select1 = document.getElementById("select1").value;
 
+        // Get the second value input by the user
         var searchText2 = document.getElementById("search-text2").value;
+        // Get the second search cateria selected by the user
         var select2 = document.getElementById("select2").value;
 
+        // Get the third value input by the user
         var searchText3 = document.getElementById("search-text3").value;
+        // Get the third search cateria selected by the user
         var select3 = document.getElementById("select3").value;
+
+        // Users only select one cateria
         if (select2 === "NONE" && select3 === "NONE") {
             serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+            // Users select two cateria
         } else if (select3 === "NONE") {
             serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}`;
+            // Users select three cateria
         } else {
             serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}&${select3}=${searchText3}`;
         }
+
+        // Output the constructed URL on the console for debugging purpose
         console.log(serverURL);
+
+        // Send request URL and respond
         fetch(serverURL)
             .then(response => response.json())
             .then(data => {
@@ -216,32 +274,46 @@
                 const dataDiv = document.getElementById('search-result');
                 const errorMessage = document.getElementById('error-message');
                 dataDiv.innerHTML = "";
+                document.getElementById('error-message').innerHTML = "";
 
                 if (data.length > 0) {
                     data.forEach(crowedfunding => {
                         const newP = document.createElement("p");
-                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organizer: ${crowedfunding.ORGANIZER}, <a href="/fundraisers?FUNDRAISER_ID=${crowedfunding.FUNDRAISER_ID}" onclick="saveId(${crowedfunding.FUNDRAISER_ID})">More details</a>`;
+                        // Display the search results, include More details hyperlink.
+                        // Once click the hyperlink, it will redirect to the selected fundraiser’s detail page
+                        newP.innerHTML = `ID: ${crowedfunding.FUNDRAISER_ID}, Organizer: ${crowedfunding.ORGANIZER}, 
+                        <a href="/fundraisers?FUNDRAISER_ID=${crowedfunding.FUNDRAISER_ID}" onclick="saveId(${crowedfunding.FUNDRAISER_ID})">More details</a>`;
 
-
+                        // Search results are placed in dataDiv
                         dataDiv.appendChild(newP);
                     });
 
+                    // If the user does not select a search category, a question type pop-up window will pop up
                 } else if (document.getElementById("select1").value === "SELECT") {
                     alertUsers();
+                    // If the corresponding fundraisers are not found, a bold red error message will be displayed
                 } else {
-                    dataDiv.innerHTML = `<span style="color: red; "><strong>No fundraiser data<\strong><span>`;
+                    errorMessage.innerHTML = `<span style="color: red; "><strong>No fundraiser data<\strong><span>`;
                 }
             })
             .catch(error => {
                 console.error("Error fecthing data", error);
-                document.getElementById('data').textContent = "Failed to load data";
+                document.getElementById('error-message').textContent = "Failed to load data";
             });
 
 
 
     }
 
-
+    /**
+     * 
+     * clearChechboxes function
+     * 
+     * Clear the search form
+     * Users clict the clear button
+     * to clear the search form
+     * 
+     */
     function clearChechboxes() {
         document.getElementById("select1").value = "SELECT";
         document.getElementById("select2").value = "NONE";
@@ -252,6 +324,17 @@
         document.getElementById('search-result').innerHTML = "";
     }
 
+    /**
+     * 
+     * saveId function
+     * 
+     * Use sessionStorage in the client's browser to save
+     * the ID of the organizer retrieved from the search. 
+     * This ID will be used on the Fundraisers page
+     * 
+     * @param id
+     * 
+     */
     function saveId(id) {
         var saveId = id;
         if (typeof (Storage) !== 'undefined') {
