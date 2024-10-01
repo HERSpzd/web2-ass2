@@ -78,7 +78,7 @@
             float: right;
         }
 
-        /* 'active-fundraisers' Container Style */
+        /* Set 'active-fundraisers' Container Style */
         #active-fundraisers {
             width: 70%;
             /* Left floating */
@@ -88,7 +88,7 @@
         /* Set the dividing line for each subheading */
         #subtitle,
         #line {
-            width: 100%;
+            width: 98%;
             border-bottom: 1.5px solid #0056b3;
             padding-bottom: 2%;
             display: inline-block;
@@ -212,7 +212,7 @@
      * 
      * 
      */
-    fetch("http://localhost:3060/api/crowedfunding/fundraisers")  //Send request URL and respond
+    fetch("http://localhost:3060/api/crowdfunding/fundraisers")  //Send request URL and respond
         .then(response => response.json())
         .then(data => {
 
@@ -232,13 +232,13 @@
                     newDiv1.id = "content";
                     // Display some details of active fundraisers
                     newDiv1.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
-                    ID: ${crowedfunding.FUNDRAISER_ID} <br> 
-                    Caption: ${crowedfunding.CAPTION} <br> 
-                    Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
-                    Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
-                    City: ${crowedfunding.CITY} <br> 
-                    Active: ${crowedfunding.ACTIVE} <br> 
-                    Category: ${crowedfunding.CATEGORY_NAME} <br>`;
+                                        ID: ${crowedfunding.FUNDRAISER_ID} <br> 
+                                        Caption: ${crowedfunding.CAPTION} <br> 
+                                        Target funding: ${crowedfunding.TARGET_FUNDING} AUD<br> 
+                                        Current funding: ${crowedfunding.CURRENT_FUNDING} AUD<br> 
+                                        City: ${crowedfunding.CITY} <br> 
+                                        Active: ${changeToActiveOrInactive(crowedfunding.ACTIVE)} <br> 
+                                        Category: ${crowedfunding.CATEGORY_NAME} <br>`;
 
                     // Display a blue line under the fundraisers
                     const newDiv = document.createElement("div");
@@ -265,6 +265,25 @@
             console.error("Error fecthing data", error);
             document.getElementById('data').textContent = "Failed to load data";
         });
+
+
+        /**
+         * 
+         * Function changeToActiveOrInactive
+         * 
+         * Change 1 to "Active" and also change
+         * 2 to "Inactive"
+         * 
+         * @param active
+         * 
+         */
+         function changeToActiveOrInactive(active) {
+            if (active === 1) {
+                return "Active";
+            } else {
+                return "Inactive";
+            }
+        }
 
 </script>
 

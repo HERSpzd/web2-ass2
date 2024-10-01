@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fundraisers</title>
     <style>
+        /* Set the style of the entire page */
         body {
             background-color: #eef3f8;
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
+        /* Set the style of h1 */
         h1 {
             text-align: center;
         }
 
+        /* Set the style of the navigation bar */
         #nav {
             text-align: center;
             list-style: none;
@@ -35,10 +38,12 @@
             text-decoration: none;
         }
 
+        /* Mouse over to change color */
         #nav li a:hover {
             background-color: #0069d9;
         }
 
+        /* Set box1 container style */
         #box1 {
             width: 80%;
             margin: 0 auto;
@@ -46,16 +51,19 @@
             margin-top: 15px;
         }
 
+        /* Set 'fundraisers-details1' Container Style */
         #fundraisers-details1 {
             width: 70%;
             float: left;
         }
 
+        /* Set box container style */
         #box {
             width: 30%;
             float: right;
         }
 
+        /* Set 'operation-guide' Container Style */
         #operation-guide {
             background-color: white;
             padding-left: 20px;
@@ -66,14 +74,16 @@
 
         }
 
+        /* Set the dividing line for each subheading */
         #subtitle {
-            width: 100%;
+            width: 98%;
             border-bottom: 1.5px solid #0056b3;
             padding-bottom: 10px;
             display: inline-block;
             margin-bottom: 0.5px;
         }
 
+        /* Set 'fundraisers-details1' Container Style */
         #fundraisers-details1 {
             margin-bottom: 20%;
         }
@@ -83,8 +93,9 @@
             float: right;
             margin-top: 4%;
             margin-left: 0;
+            margin-right: 20px;
             width: 40%;
-
+            padding-right: 10px;
         }
 
         /* Set image style */
@@ -96,6 +107,7 @@
             margin-top: 3%;
         }
 
+        /* Set the style of the button */
         #donate {
             width: 20%;
             height: 30px;
@@ -164,14 +176,24 @@
     </footer>
 
     <script>
+        // Retrieve the ID value obtained from the browser
         var id = sessionStorage.getItem('id');
+
+        // For debugging purpose
         console.log(id);
-        console.log(`http://localhost:3060/api/crowedfunding/fundraisers/${id}`);
-        fetch(`http://localhost:3060/api/crowedfunding/fundraisers/${id}`)
+        console.log(`http://localhost:3060/api/crowdfunding/fundraisers/${id}`);
+
+        /**
+         * 
+         * Retrieve data from the server and display 
+         * detailed information of the searched fundraiser
+         * 
+         */
+        fetch(`http://localhost:3060/api/crowdfunding/fundraisers/${id}`)
             .then(response => response.json())
             .then(data => {
 
-
+                // Get the div with ID 'fundraisers-details'
                 const dataDiv = document.getElementById('fundraisers-details');
                 dataDiv.innerHTML = "";
 
@@ -189,19 +211,21 @@
                         newDiv1.innerHTML = `<strong>Organizer: ${crowedfunding.ORGANIZER}</strong> <br> 
                                             ID: ${crowedfunding.FUNDRAISER_ID} <br> 
                                             Caption: ${crowedfunding.CAPTION} <br> 
-                                            Target funding: ${crowedfunding.TARGET_FUNDING} <br> 
-                                            Current funding: ${crowedfunding.CURRENT_FUNDING} <br> 
+                                            Target funding: ${crowedfunding.TARGET_FUNDING} AUD<br> 
+                                            Current funding: ${crowedfunding.CURRENT_FUNDING} AUD<br> 
                                             City: ${crowedfunding.CITY} <br> 
-                                            Active: ${crowedfunding.ACTIVE} <br> 
+                                            Active: ${changeToActiveOrInactive(crowedfunding.ACTIVE)} <br> 
                                             Category: ${crowedfunding.CATEGORY_NAME} <br><br>
                                             <button id="donate" onclick="donateAlert(); removeSessionStorage()">Donate</button>`;
 
+                        // Add two elements to the page
                         dataDiv.appendChild(newImg);
                         dataDiv.appendChild(newDiv1);
 
                     });
 
                 }
+                // If no corresponding data is found, an error message will be displayed
                 else {
                     dataDiv.textContent = "No fundraiser data";
                 }
@@ -211,16 +235,50 @@
                 document.getElementById('data').textContent = "Failed to load data";
             });
 
+        /**
+         * 
+         * Function donateAlert
+         * 
+         * Once the donate button is clicked, it will 
+         * show a dialog window saying 
+         * "This feature is under contruction".
+         * 
+         */
         function donateAlert() {
             alert("This feature is under contruction");
 
         }
 
+        /**
+         * 
+         * Function removeSessionStorage
+         * 
+         * Once the donate button is clicked,
+         * the browser will delete the stored ID value
+         * 
+         */
         function removeSessionStorage() {
             sessionStorage.removeItem('id');
         }
 
 
+        /**
+         * 
+         * Function changeToActiveOrInactive
+         * 
+         * Change 1 to "Active" and also change
+         * 2 to "Inactive"
+         * 
+         * @param active
+         * 
+         */
+        function changeToActiveOrInactive(active) {
+            if (active === 1) {
+                return "Active";
+            } else {
+                return "Inactive";
+            }
+        }
 
 
 

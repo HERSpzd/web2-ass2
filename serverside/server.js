@@ -15,7 +15,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
 // Define route path for crowdfundingAPI: /api/crowedfunding
-app.use("/api/crowedfunding", crowedfundingAPI);
+app.use("/api/crowdfunding", crowedfundingAPI);
 
 // Start the server on port 3060
 app.listen(3060);

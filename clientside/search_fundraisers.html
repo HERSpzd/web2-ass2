@@ -7,15 +7,18 @@
     <title>Search Fundraisers</title>
 
     <style>
+        /* Set the style of the entire page */
         body {
             background-color: #eef3f8;
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
+        /* Set the style of h1 */
         h1 {
             text-align: center;
         }
 
+        /* Set the style of the navigation bar */
         #nav {
             text-align: center;
             list-style: none;
@@ -33,13 +36,16 @@
             display: block;
             padding: 10px 20px;
             color: #ffffff;
+            /* Clear underline */
             text-decoration: none;
         }
 
+        /* Mouse over to change color */
         #nav li a:hover {
             background-color: #0069d9;
         }
 
+        /* Set box1 container style */
         #box1 {
             width: 80%;
             margin: 0 auto;
@@ -47,11 +53,13 @@
             margin-top: 15px;
         }
 
+        /* Set box container style */
         #box {
             width: 30%;
             float: right;
         }
 
+        /* 'operation-guide' Container Style */
         #operation-guide {
             background-color: white;
             padding-left: 20px;
@@ -62,40 +70,56 @@
 
         }
 
+        /* Set 'criteria' Container Style */
         #criteria {
             width: 70%;
             float: left;
         }
 
+        /* Set the dividing line for each subheading */
         #subtitle,
         #search-result1 {
-            width: 100%;
+            width: 98%;
             border-bottom: 1.5px solid #0056b3;
             padding-bottom: 10px;
             display: inline-block;
             margin-bottom: 0.5px;
         }
 
+        /* Set the style of the form */
         form {
             margin-left: auto;
             margin-right: auto;
             width: 45%;
         }
 
+        /* Set the style of the dropdown boxes */
         select {
             width: 30%;
             height: 30px;
             background-color: #eef3f8;
         }
 
-        #search1, #clear {
+        /* Set the style of the two buttons */
+        #search1,
+        #clear {
             width: 20%;
             height: 30px;
         }
 
-        #search-text1, #search-text2, #search-text3 {
+        /* Set the style of the input boxes */
+        #search-text1,
+        #search-text2,
+        #search-text3 {
             width: 60%;
             height: 30px;
+        }
+
+        /* <span style="color: red; "><strong> */
+
+        #error-message {
+            color: red;
+            font-weight: bold;
         }
 
 
@@ -185,7 +209,8 @@
                     search. The search results will be displayed in the "Search result" section. To find more
                     information
                     about the corresponding Fundraiser, click on the "More detail" hyperlink, and the webpage will
-                    automatically redirect and display more relevant information.</p>
+                    automatically redirect and display more relevant information. Press "Clear" button to Clear the
+                    Input boxes and dropdown boxes.</p>
 
                 <br>
             </div>
@@ -254,16 +279,16 @@
 
         // Users only select one cateria
         if (select2 === "NONE" && select3 === "NONE") {
-            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}`;
+            serverURL = `http://localhost:3060/api/crowdfunding/search?${select1}=${searchText1}`;
             // Users select two cateria
         } else if (select3 === "NONE") {
-            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}`;
+            serverURL = `http://localhost:3060/api/crowdfunding/search?${select1}=${searchText1}&${select2}=${searchText2}`;
             // Users select three cateria
         } else {
-            serverURL = `http://localhost:3060/api/crowedfunding/research?${select1}=${searchText1}&${select2}=${searchText2}&${select3}=${searchText3}`;
+            serverURL = `http://localhost:3060/api/crowdfunding/search?${select1}=${searchText1}&${select2}=${searchText2}&${select3}=${searchText3}`;
         }
 
-        // Output the constructed URL on the console for debugging purpose
+        // For debugging purpose
         console.log(serverURL);
 
         // Send request URL and respond
@@ -293,7 +318,7 @@
                     alertUsers();
                     // If the corresponding fundraisers are not found, a bold red error message will be displayed
                 } else {
-                    errorMessage.innerHTML = `<span style="color: red; "><strong>No fundraiser data<\strong><span>`;
+                    errorMessage.innerHTML = `No fundraiser data`;
                 }
             })
             .catch(error => {
