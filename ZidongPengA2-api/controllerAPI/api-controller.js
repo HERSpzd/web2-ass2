@@ -62,7 +62,6 @@ router.get("/search", (req, res) => {
                 "WHERE f.ACTIVE = true " +  
                 "AND f.ORGANIZER = ?";
     var parameters = [req.query.ORGANIZER];
-
     // Search city
   } else if (!req.query.ORGANIZER && !req.query.CATEGORY_NAME) {
     var query = "SELECT f.*, c.NAME AS CATEGORY_NAME " + 
