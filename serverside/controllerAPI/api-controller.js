@@ -120,8 +120,6 @@ router.get("/search", (req, res) => {
                 "AND f.CITY = ? " + 
                 "AND c.NAME = ?";
     var parameters = [req.query.ORGANIZER, req.query.CITY, req.query.CATEGORY_NAME];
-
-
   }
 
   connection.query(query, parameters,
